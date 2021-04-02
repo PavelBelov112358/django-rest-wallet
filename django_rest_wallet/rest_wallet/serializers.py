@@ -7,11 +7,11 @@ class WalletSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Wallet
-        fields = ('name', 'balance')
+        fields = ('id', 'name', 'balance')
 
 
 class TransactionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Transaction
-        fields = ('time_committal', 'value', 'comment')
+        fields = ('id', 'wallet', 'time_perform', 'value', 'comment')
