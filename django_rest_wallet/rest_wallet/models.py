@@ -6,7 +6,7 @@ from djmoney.models.fields import MoneyField
 
 
 class Wallet(models.Model):
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='wallets')
     name = models.CharField(max_length=255)
     balance = MoneyField(max_digits=14, decimal_places=2, default_currency='RUB', null=True, default=0, editable=False)
 
@@ -15,7 +15,7 @@ class Wallet(models.Model):
 
 
 class Transaction(models.Model):
-    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
+    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE, related_name='transactions')
     time_perform = models.DateTimeField(auto_now_add=True)
     value = MoneyField(max_digits=14, decimal_places=2, default_currency='RUB')
     comment = models.CharField(max_length=1023, blank=True, default='')

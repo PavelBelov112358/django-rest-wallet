@@ -20,6 +20,3 @@ class WalletAdmin(admin.ModelAdmin):
 
     def owner(self, object):
         return object.wallet.owner
-
-    name.short_description = 'Name'
-    owner.short_description = 'Owner'

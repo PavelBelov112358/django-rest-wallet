@@ -1,27 +1,38 @@
-from rest_framework.generics import *
-from rest_framework.mixins import *
-from rest_framework.viewsets import *
+from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
-from .models import *
-from .serializers import *
+from .models import Wallet, Transaction
+from .serializers import (
+    WalletSerializer,
+    WalletTransactionSerializer,
+    UserTransactionSerializer
+)
 
 
-class WalletView(UpdateAPIView, DestroyAPIView, ListCreateAPIView):
+class WalletModelViewSet(ModelViewSet):
     serializer_class = WalletSerializer
+    lookup_url_kwarg = 'wallet_pk'
 
     def get_queryset(self):
         return Wallet.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
-        owner = self.request.user
-        return serializer.save(owner=owner)
+        return serializer.save(owner=self.request.user)
 
 
-class TransactionView(ListCreateAPIView):
-    serializer_class = TransactionSerializer
+class WalletTransactionModelViewSet(ModelViewSet):
+    serializer_class = WalletTransactionSerializer
+    lookup_url_kwarg = 'transaction_pk'
+
+    def get_queryset(self):
+        return Transaction.objects.filter(wallet=self.kwargs.get('wallet_pk'))
+
+    def perform_create(self, serializer):
+        return serializer.save(wallet_id=self.kwargs.get('wallet_pk'))
+
+
+class UserTransactionModelViewSet(ReadOnlyModelViewSet):
+    serializer_class = UserTransactionSerializer
+    lookup_url_kwarg = 'transaction_pk'
 
     def get_queryset(self):
         return Transaction.objects.filter(wallet__owner=self.request.user)
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)

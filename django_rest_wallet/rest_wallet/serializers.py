@@ -7,11 +7,19 @@ class WalletSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Wallet
-        fields = ('id', 'name', 'balance')
+        exclude = ('owner',)
 
 
-class TransactionSerializer(serializers.ModelSerializer):
+class WalletTransactionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Transaction
-        fields = ('id', 'wallet', 'time_perform', 'value', 'comment')
+        exclude = ('wallet',)
+
+
+class UserTransactionSerializer(serializers.ModelSerializer):
+    wallet = serializers.SlugRelatedField(slug_field='name', read_only=True)
+
+    class Meta:
+        model = Transaction
+        fields = '__all__'
