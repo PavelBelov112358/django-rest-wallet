@@ -1,4 +1,7 @@
+import json
+
 import pytest
+from django.contrib.auth.models import AnonymousUser
 from mixer.backend.django import mixer
 
 from django.conf import settings
@@ -73,3 +76,33 @@ class TestViews(TestCase):
         view = user_transaction_detail
         response = view(request, transaction_pk=1)
         assert response.status_code == 200
+
+
+class TestAnonymousUserViews(TestCase):
+
+    def setUp(self) -> None:
+        self.factory = RequestFactory()
+
+    def test_wallet_view_sets_unauthenticated(self):
+        path = reverse('wallet-list')
+        request = self.factory.get(path)
+        request.user = AnonymousUser()
+        view = user_transaction_list
+        response = view(request)
+        assert response.status_code == 403
+
+    def test_wallet_transaction_view_sets_unauthenticated(self):
+        path = reverse('wallet-transaction-list', kwargs={'wallet_pk': 1})
+        request = self.factory.get(path)
+        request.user = AnonymousUser()
+        view = user_transaction_list
+        response = view(request)
+        assert response.status_code == 403
+
+    def test_user_transaction_view_sets_unauthenticated(self):
+        path = reverse('user-transaction-list')
+        request = self.factory.get(path)
+        request.user = AnonymousUser()
+        view = user_transaction_list
+        response = view(request)
+        assert response.status_code == 403
