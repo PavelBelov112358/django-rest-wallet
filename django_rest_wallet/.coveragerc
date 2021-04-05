@@ -1,0 +1,5 @@
+[run]
+source = rest_wallet
+omit =  *\tests\*
+        *\migrations\*
+        *__init__*

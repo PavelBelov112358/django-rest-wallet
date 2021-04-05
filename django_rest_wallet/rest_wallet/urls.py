@@ -44,9 +44,9 @@ urlpatterns = format_suffix_patterns([
     path('wallets/', wallet_list, name='wallet-list'),
     path('wallets/<int:wallet_pk>', wallet_detail, name='wallet-detail'),
 
-    path('wallets/<int:wallet_pk>/transactions/', wallet_transaction_list, name='wallet_transaction-list'),
+    path('wallets/<int:wallet_pk>/transactions/', wallet_transaction_list, name='wallet-transaction-list'),
     path('wallets/<int:wallet_pk>/transactions/<int:transaction_pk>', wallet_transaction_detail,
-         name='wallet_transaction-detail'),
+         name='wallet-transaction-detail'),
 
     path('transactions/', user_transaction_list, name='user-transaction-list'),
     path('transactions/<int:transaction_pk>', user_transaction_detail, name='user-transaction-detail'),
