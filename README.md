@@ -1,4 +1,4 @@
-# DjangoWalletAPI
+# DjangoWallet (REST API)
 The test task is to make a simple REST service (Django).
 
 Personal financial management service must have the following functions:
