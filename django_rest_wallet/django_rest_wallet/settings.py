@@ -13,12 +13,12 @@ import os
 from pathlib import Path
 import dotenv
 
-# Additional environment variables
-dotenv.read_dotenv()
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Additional environment variables
+dotenv.load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
