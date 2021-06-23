@@ -1,5 +1,5 @@
 # DjangoWallet (REST API)
-The test task is to make a simple REST service (Django).
+The test task is to make a simple REST service (Django REST framework).
 
 Personal financial management service must have the following functions:
 - The user stores data about his wallet: arbitrary name and balance in rubles.
